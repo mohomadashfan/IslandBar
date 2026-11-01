@@ -1,0 +1,33 @@
+# Build output
+.build/
+build/
+DerivedData/
+*.app
+*.dSYM/
+*.zip
+*.dmg
+
+# SwiftPM / Xcode local state
+.swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+Package.resolved.bak
+
+# Editor local settings
+.vscode/
+.idea/
+*.swp
+
+# Signing material and secrets
+*.p12
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+.env
+.env.*
+
+# macOS
+.DS_Store
+dist/

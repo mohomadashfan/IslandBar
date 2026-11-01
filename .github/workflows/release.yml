@@ -1,0 +1,36 @@
+name: Release
+
+# Push a tag such as v0.2.0 to build, test and publish a draft GitHub release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Test
+        run: swift test
+
+      - name: Package universal app
+        env:
+          UNIVERSAL: "1"
+        run: scripts/package-release.sh "${GITHUB_REF_NAME}"
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          gh release create "${GITHUB_REF_NAME}" \
+            "dist/IslandBar-${version}.zip" "dist/IslandBar-${version}.zip.sha256" \
+            --draft --title "IslandBar ${version}" \
+            --notes-file docs/RELEASE_NOTES_TEMPLATE.md

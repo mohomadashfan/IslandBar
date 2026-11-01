@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>IslandBar</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.islandbar.IslandBar</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>IslandBar</string>
+	<key>CFBundleDisplayName</key>
+	<string>IslandBar</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>IslandBar uses Apple Events to play, pause and skip tracks in Music and Spotify and to show album artwork.</string>
+	<key>NSAudioCaptureUsageDescription</key>
+	<string>IslandBar changes the volume of individual apps and applies your equaliser by routing their audio through IslandBar. Audio is processed live and never recorded or sent anywhere.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>IslandBar shows a camera preview in the Mirror page so you can check how you look before a call. Video never leaves your Mac and is not recorded.</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2026 IslandBar contributors. MIT License.</string>
+</dict>
+</plist>

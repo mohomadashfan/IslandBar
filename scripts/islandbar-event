@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Sends a developer activity event to IslandBar by writing a JSON file into its events folder.
+#
+# Usage:
+#   islandbar-event --title "swift build" [--state running] [--kind build] [--source my-tool]
+#                   [--detail "Compiling 12 files"] [--progress 0.4] [--session ID]
+#
+# States: started running waiting succeeded failed cancelled info
+# Kinds:  build test agent task deploy custom
+#
+# Writes atomically (temp file + rename) so IslandBar never reads a partial event.
+# Requires python3 (for JSON escaping), which ships with the Xcode Command Line Tools.
+set -euo pipefail
+
+source_name="${ISLANDBAR_SOURCE:-cli}"
+kind="custom"
+state="info"
+title=""
+detail=""
+progress=""
+session=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --source) source_name="$2"; shift 2 ;;
+        --kind) kind="$2"; shift 2 ;;
+        --state) state="$2"; shift 2 ;;
+        --title) title="$2"; shift 2 ;;
+        --detail) detail="$2"; shift 2 ;;
+        --progress) progress="$2"; shift 2 ;;
+        --session) session="$2"; shift 2 ;;
+        -h|--help) sed -n '2,13p' "$0"; exit 0 ;;
+        *) echo "islandbar-event: unknown option $1" >&2; exit 64 ;;
+    esac
+done
+
+if [[ -z "$title" ]]; then
+    echo "islandbar-event: --title is required" >&2
+    exit 64
+fi
+
+inbox="${ISLANDBAR_EVENTS_DIR:-$HOME/Library/Application Support/IslandBar/events}"
+if [[ ! -d "$inbox" ]]; then
+    # IslandBar creates the folder when "Accept events from local tools" is on.
+    exit 0
+fi
+
+json="$(SOURCE="$source_name" KIND="$kind" STATE="$state" TITLE="$title" DETAIL="$detail" \
+    PROGRESS="$progress" SESSION="$session" /usr/bin/env python3 -c '
+import json, os, datetime
+event = {
+    "source": os.environ["SOURCE"], "kind": os.environ["KIND"], "state": os.environ["STATE"],
+    "title": os.environ["TITLE"],
+    "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+}
+if os.environ["DETAIL"]: event["detail"] = os.environ["DETAIL"]
+if os.environ["SESSION"]: event["session"] = os.environ["SESSION"]
+if os.environ["PROGRESS"]: event["progress"] = float(os.environ["PROGRESS"])
+print(json.dumps(event))
+')"
+
+tmp="$(mktemp "$inbox/.event.XXXXXX")"
+printf '%s\n' "$json" > "$tmp"
+mv "$tmp" "$inbox/$(date +%s)-$$-$RANDOM.json"

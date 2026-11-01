@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Required under the hardened runtime to send Apple Events to Music and Spotify. -->
+	<key>com.apple.security.automation.apple-events</key>
+	<true/>
+	<!-- Required under the hardened runtime for the Mirror camera preview. -->
+	<key>com.apple.security.device.camera</key>
+	<true/>
+	<!-- Sound: Core Audio process taps deliver app audio as an input stream, which the hardened
+	     runtime treats as audio input. This entitlement only allows asking; it grants nothing by
+	     itself, and IslandBar never asks for the microphone. -->
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
+</dict>
+</plist>
