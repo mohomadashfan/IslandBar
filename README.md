@@ -50,6 +50,15 @@ The island also supports:
 - macOS 14 Sonoma or later (Apple Silicon and Intel)
 - To build: Xcode 16 or later (Swift 6). No paid Apple Developer membership is needed.
 
+## Install
+
+```sh
+scripts/install.sh
+```
+
+This builds IslandBar and installs it in `/Applications`, where it appears in Launchpad and
+Spotlight. To start it automatically, open **Settings… › General › Launch IslandBar at login**.
+
 ## Build and run
 
 ```sh

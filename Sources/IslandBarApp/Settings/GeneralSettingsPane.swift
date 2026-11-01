@@ -58,6 +58,9 @@ struct GeneralSettingsPane: View {
                 if let message = loginItem.lastErrorMessage {
                     Text(message).foregroundStyle(.red)
                 }
+                if AppInfo.isRunningFromAppBundle, !AppInfo.isInstalledInApplications {
+                    SettingsNote("This copy is running from \(Bundle.main.bundleURL.deletingLastPathComponent().path). Install IslandBar in Applications (scripts/install.sh) so it appears in Launchpad and launch at login keeps working after you rebuild.")
+                }
             }
 
             if let error = settings.lastError {

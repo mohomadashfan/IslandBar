@@ -200,4 +200,11 @@ enum AppInfo {
     static var isRunningFromAppBundle: Bool {
         Bundle.main.bundleURL.pathExtension == "app"
     }
+
+    /// Login items point at a specific copy of the app, so they should point at the installed one.
+    static var isInstalledInApplications: Bool {
+        let path = Bundle.main.bundleURL.standardizedFileURL.path
+        let userApplications = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Applications").path
+        return path.hasPrefix("/Applications/") || path.hasPrefix(userApplications + "/")
+    }
 }

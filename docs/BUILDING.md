@@ -20,6 +20,17 @@ Xcode's toolchain for that command only. To make Xcode the default everywhere:
 sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 ```
 
+## Install
+
+```sh
+scripts/install.sh            # build a release copy and install it in /Applications
+scripts/install.sh uninstall  # quit and remove it (your data is kept)
+```
+
+The installed app appears in Finder, Launchpad and Spotlight. Launch at login (Settings ›
+General) should be turned on from the installed copy; development builds in `build/` are
+unregistered so the app is not listed twice.
+
 ## Commands
 
 | Command | Result |
